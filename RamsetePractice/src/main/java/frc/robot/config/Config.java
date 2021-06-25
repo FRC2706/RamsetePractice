@@ -49,7 +49,9 @@ public final class Config {
     public static final double RAMSETE_KD = 0;
     public static final double RAMSETE_ALLOWABLE_PID_ERROR = 0;
 
-
+    // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
+    public static final double kRamseteB = 2;
+    public static final double kRamseteZeta = 0.7;
 
     /** Setup for ArcadeDrive */
     public static int LEFT_CONTROL_STICK_Y = 1;

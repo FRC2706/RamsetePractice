@@ -12,7 +12,7 @@ import frc.robot.config.Config;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -55,7 +55,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // Create your RamseteCommand here and have this method return the instance of it.
-        return new InstantCommand();
+        return new InstantCommand(); // Temporary. Replace this.
     }
 }

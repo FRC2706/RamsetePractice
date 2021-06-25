@@ -6,13 +6,14 @@ import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import frc.robot.config.Config;
 
 public class RamseteControllerLogging extends RamseteController {
     
     NetworkTableEntry xError, yError, rotError;
 
     public RamseteControllerLogging() {
-        super();
+        super(Config.kRamseteB, Config.kRamseteZeta);
 
         var table = NetworkTableInstance.getDefault().getTable("DrivetrainData");
         xError = table.getEntry("xError");

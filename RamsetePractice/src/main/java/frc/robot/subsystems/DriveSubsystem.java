@@ -13,6 +13,7 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.sensors.PigeonIMU.FusionStatus;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.config.Config;
 
@@ -108,13 +109,13 @@ public class DriveSubsystem extends SubsystemBase {
         m_differentialDrive.arcadeDrive(forwardVal, rotateVal, squareInputs);
     }
 
-    private double getCurrentAngle() {
+    private Rotation2d getCurrentAngle() {
         FusionStatus status = new FusionStatus();
         double angle = pigeon.getFusedHeading(status);
 
         ErrorCode error = status.lastError; // ErrorCode to check
 
-        return angle;
+        return Rotation2d.fromDegrees(angle);
     }
 
 
@@ -123,7 +124,7 @@ public class DriveSubsystem extends SubsystemBase {
      * Used for ramsete. 
      */
     public void tankDriveVelocity(double leftVel, double rightVel) {
-        
+
     }
 
     @Override
