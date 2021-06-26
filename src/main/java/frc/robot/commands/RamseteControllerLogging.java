@@ -12,8 +12,8 @@ public class RamseteControllerLogging extends RamseteController {
     
     NetworkTableEntry xError, yError, rotError;
 
-    public RamseteControllerLogging() {
-        super(Config.kRamseteB, Config.kRamseteZeta);
+    public RamseteControllerLogging(double b, double zeta) {
+        super(b, zeta);
 
         var table = NetworkTableInstance.getDefault().getTable("DrivetrainData");
         xError = table.getEntry("xError");

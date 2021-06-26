@@ -69,7 +69,7 @@ public class DriveSubsystem extends SubsystemBase {
         TalonSRXConfiguration talonConfig = new TalonSRXConfiguration(); 
 
         /** Put any settings in TalonSRXConfiguration here. */
-        
+        talonConfig.slot1.kF = Config.RAMSETE_KF;
 
 
         // Error Code check all TalonSRXConfiguration settings
@@ -92,6 +92,10 @@ public class DriveSubsystem extends SubsystemBase {
         // Set the encoder inversions
         leftLeader.setSensorPhase(Config.DRIVETRAIN_LEFT_SENSORPHASE);
         rightLeader.setSensorPhase(Config.DRIVETRAIN_RIGHT_SENSORPHASE);
+
+        // Ramsete set to slot 1 so any future Driver controls can be slot 1
+        leftLeader.selectProfileSlot(1, 0);
+        rightLeader.selectProfileSlot(1, 0);
 
         // Set brake mode for testing so it immediatly stops moving if something goes wrong
         leftLeader.setNeutralMode(NeutralMode.Brake);
@@ -120,8 +124,8 @@ public class DriveSubsystem extends SubsystemBase {
 
 
     /**
-     * Sets the velocity of the left and right side of the drivetrain.
-     * Used for ramsete. 
+     * Sets the velocity of the left and right side of the drivetrain in meters per second.
+     * Called by RamseteCommand
      */
     public void tankDriveVelocity(double leftVel, double rightVel) {
 

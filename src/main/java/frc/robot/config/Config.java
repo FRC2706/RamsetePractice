@@ -33,25 +33,7 @@ public final class Config {
     public static final boolean DRIVETRAIN_LEFT_SENSORPHASE = true;
     public static final boolean DRIVETRAIN_RIGHT_SENSORPHASE = true;
 
-    public static final double kTrackwidthMeters = 0.69;
-    public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
-            kTrackwidthMeters);
-
-    public static final double drivetrainWheelDiameter = 0.1524;
-    public static final double ticksPerRevolution = 4096;
-
-    public static final double kMaxSpeedMetersPerSecond = 1;
-    public static final double kMaxAccelerationMetersPerSecondSquared = 0.5;
-
-    public static final double RAMSETE_KF = 0.5; // Rough/quick tuning.
-    public static final double RAMSETE_KP = 0.15;
-    public static final double RAMSETE_KI = 0;
-    public static final double RAMSETE_KD = 0;
-    public static final double RAMSETE_ALLOWABLE_PID_ERROR = 0;
-
-    // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
-    public static final double kRamseteB = 2;
-    public static final double kRamseteZeta = 0.7;
+    public static final double RAMSETE_KF = 0;
 
     /** Setup for ArcadeDrive */
     public static int LEFT_CONTROL_STICK_Y = 1;
