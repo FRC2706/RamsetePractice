@@ -34,6 +34,16 @@ public final class Config {
     public static final boolean DRIVETRAIN_RIGHT_SENSORPHASE = true;
 
     public static final double RAMSETE_KF = 0;
+    public static final double RAMSETE_KP = 0;
+    public static final double RAMSETE_KI = 0;
+    public static final double RAMSETE_KD = 0;
+    public static final double RAMSETE_ALLOWABLE_ERROR = 0;
+    
+
+
+    public static final double CPRMagEncoder = 4096;
+    public static final double wheelDiameter = 0.1524;
+
 
     /** Setup for ArcadeDrive */
     public static int LEFT_CONTROL_STICK_Y = 1;
@@ -46,6 +56,25 @@ public final class Config {
     public static boolean INVERT_SECOND_AXIS = false;
 
     public static Double JOYSTICK_AXIS_DEADBAND = 0.1;
+
+    //DifferentialDriveKinematics
+    public static final double ksVolts = 0.22;
+    public static final double kvVoltSecondsPerMeter = 1.98;
+    public static final double kaVoltSecondsSquaredPerMeter = 0.2;
+
+    // Example value only - as above, this must be tuned for your drive!
+    public static final double kPDriveVel = 8.5;
+    //DifferentialDriveKinematics
+    public static final double kTrackwidthMeters = 0.69;
+    public static final DifferentialDriveKinematics kDriveKinematics =  new DifferentialDriveKinematics(kTrackwidthMeters);;
+
+    //Max Trajectory Velocity/Acceleration
+    public static final double kMaxSpeedMetersPerSecond = 3;
+    public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+
+    // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
+    public static final double kRamseteB = 2;
+    public static final double kRamseteZeta = 0.7;
 
     /**
      * Used for AracdeDrive code from 2020
