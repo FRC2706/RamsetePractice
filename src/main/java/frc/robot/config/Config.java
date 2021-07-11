@@ -5,7 +5,6 @@
 package frc.robot.config;
 
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -33,7 +32,23 @@ public final class Config {
     public static final boolean DRIVETRAIN_LEFT_SENSORPHASE = true;
     public static final boolean DRIVETRAIN_RIGHT_SENSORPHASE = true;
 
+    public static final double kTrackwidthMeters = 0.69;
+    public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
+
+    public static final double kMaxSpeedMetersPerSecond = 1.0;
+    public static final double kMaxAccelerationMetersPerSecondSquared = 0.5;
+
+    public static final double kRamseteB = 2.0;
+    public static final double kRamseteZeta = 0.7;
+
     public static final double RAMSETE_KF = 0;
+    public static final double RAMSETE_KP = 0;
+    public static final double RAMSETE_KI = 0;
+    public static final double RAMSETE_KD = 0;
+    public static final double RAMSETE_ALLOWABLE_ERROR = 0;
+
+    public static final double CPRMagEncoder = 4096;
+    public static final double wheelDiameter = 0.1571;
 
     /** Setup for ArcadeDrive */
     public static int LEFT_CONTROL_STICK_Y = 1;
@@ -47,6 +62,7 @@ public final class Config {
 
     public static Double JOYSTICK_AXIS_DEADBAND = 0.1;
 
+    
     /**
      * Used for AracdeDrive code from 2020
      * 
