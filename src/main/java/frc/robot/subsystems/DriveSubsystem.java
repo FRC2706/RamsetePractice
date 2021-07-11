@@ -11,9 +11,12 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.ctre.phoenix.sensors.PigeonIMU.FusionStatus;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.config.Config;
 
@@ -27,6 +30,9 @@ public class DriveSubsystem extends SubsystemBase {
     // Pigeon
     PigeonIMU pigeon; 
 
+    // Odometry class for tracking robot pose
+    private final DifferentialDriveOdometry m_odometry;
+   
 
     // DifferentialDrive for acrade drive
     DifferentialDrive m_differentialDrive;
@@ -55,6 +61,7 @@ public class DriveSubsystem extends SubsystemBase {
 
         setTalonConfigurations();
 
+        m_odometry = new DifferentialDriveOdometry(getCurrentAngle());
     }
 
     private void setTalonConfigurations() {
@@ -70,7 +77,10 @@ public class DriveSubsystem extends SubsystemBase {
 
         /** Put any settings in TalonSRXConfiguration here. */
         talonConfig.slot1.kF = Config.RAMSETE_KF;
-
+        talonConfig.slot1.kP = Config.RAMSETE_KP;
+        talonConfig.slot1.kI = Config.RAMSETE_KI;
+        talonConfig.slot1.kD = Config.RAMSETE_KD;
+        talonConfig.slot1.allowableClosedloopError = Config.RAMSETE_ALLOWABLE_ERROR;
 
         // Error Code check all TalonSRXConfiguration settings
         // Config all talon settings - automatically returns worst error
@@ -129,11 +139,64 @@ public class DriveSubsystem extends SubsystemBase {
      */
     public void tankDriveVelocity(double leftVel, double rightVel) {
 
+        leftLeader.set(ControlMode.Velocity, metersPerSecondToTalonVelocity(leftVel));
+        rightLeader.set(ControlMode.Velocity, metersPerSecondToTalonVelocity(rightVel));
+        m_differentialDrive.feed();
+    }
+    public Pose2d getPose()
+    {
+        return m_odometry.getPoseMeters();
+    }
+
+    public void resetOdometry(Pose2d pose)
+    {
+        m_odometry.resetPosition(pose, getCurrentAngle());
     }
 
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
+
+        // Update the odometry in the periodic block
+        m_odometry.update(getCurrentAngle(), getLeftDistance(), getRightDistance());
+    }
+
+    private double getLeftDistance() {
+        return talonPositionToMeters(leftLeader.getSelectedSensorPosition());
+    }
+
+    private double getRightDistance() {
+        return talonPositionToMeters(rightLeader.getSelectedSensorPosition());
+    }
+
+    private double talonPositionToMeters(double talonPosition)
+    {
+        double pos = talonPosition;
+
+        //convert from ticks to distance
+        double rev = pos / Config.CPRMagEncoder;
+        double meters = rev * (Math.PI * Config.wheelDiameter);
+
+        return meters;
+    }
+
+    /**
+     * Converting meters to talon position
+     * 
+     * @param meters
+     * @return
+     */
+    private double metersToTalonPosition(double meters)
+    {
+        double circumference = Math.PI * Config.wheelDiameter;
+        double rev = meters / circumference;
+
+        double pos = rev * Config.CPRMagEncoder;
+        return pos;
+    }
+
+    private double metersPerSecondToTalonVelocity(double metersPerSecond) {
+        return metersToTalonPosition(metersPerSecond) * 0.1;
     }
 
 }
